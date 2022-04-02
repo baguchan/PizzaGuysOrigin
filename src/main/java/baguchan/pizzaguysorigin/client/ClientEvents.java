@@ -35,7 +35,7 @@ public class ClientEvents {
 
 
 		entity.getCapability(PizzaGuysOrigin.SUPER_DASH_CAP).ifPresent(illusion -> {
-			if (IPowerContainer.hasPower(entity, ModPowerTypes.SUPER_DASH.get())) {
+			if (IPowerContainer.hasPower(entity, ModPowerTypes.SUPER_DASH.get()) && illusion.getPercentBoost() > 0.5F) {
 				posestack.pushPose();
 				boolean shouldSit = entity.isPassenger() && (entity.getVehicle() != null && entity.getVehicle().shouldRiderSit());
 				float f = Mth.rotLerp(partialtick, entity.yBodyRotO, entity.yBodyRot);

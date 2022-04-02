@@ -2,18 +2,14 @@
   "type": "origins:multiple",
   "add_velocity": {
     "type": "origins:add_velocity",
-    "y": 2,
-    "condition": {
-      "type": "origins:in_tag",
-      "tag": "minecraft:lava"
-    }
+    "y": 4
   },
   "play_sound": {
     "type": "origins:play_sound",
-    "sound": "minecraft:entity.generic.burn",
-    "condition": {
-      "type": "origins:in_tag",
-      "tag": "minecraft:lava"
-    }
+    "sound": "minecraft:entity.generic.burn"
+  },
+  "fluid_condition": {
+    "type": "origins:in_tag",
+    "tag": "minecraft:lava"
   }
 }
