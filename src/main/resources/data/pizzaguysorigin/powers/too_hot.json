@@ -9,7 +9,7 @@
       },
       {
         "type": "origins:add_velocity",
-        "y": 4
+        "y": 3
       },
       {
         "type": "origins:spawn_particles",
@@ -41,6 +41,10 @@
       {
         "type": "origins:name",
         "name": "inFire"
+      },
+      {
+        "type": "origins:name",
+        "name": "inFire.player"
       }
     ]
   },

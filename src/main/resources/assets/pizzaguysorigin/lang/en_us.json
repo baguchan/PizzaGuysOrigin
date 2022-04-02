@@ -1,8 +1,8 @@
 {
-  "origin.pizzaguysorigin.pizza_guys.name": "Pizza Guy",
-  "origin.pizzaguysorigin.pizza_guys.description": "The ability of peppino from the pizza tower (game). Same as Human. but anime like movement.",
-  "power.pizzaguysorigin.anime_like_lava.name": "Anime like lava",
-  "power.pizzaguysorigin.anime_like_lava.description": "When you In the lava. You do the big jumped on the lava(Like anime!).",
+  "origin.pizzaguysorigin.pizza_guy.name": "Pizza Guy",
+  "origin.pizzaguysorigin.pizza_guy.description": "The ability of peppino from the pizza tower (game). Same as Human. but anime like movement.",
+  "power.pizzaguysorigin.too_hot.name": "Too Hot!",
+  "power.pizzaguysorigin.too_hot.description": "When you In the lava or fire. You do the big jumped on the lava(Like anime!).",
   "power.pizzaguysorigin.super_dash.name": "Super Dash",
   "power.pizzaguysorigin.super_dash.description": "When you dashing. You can keep tackle another entity."
 }
