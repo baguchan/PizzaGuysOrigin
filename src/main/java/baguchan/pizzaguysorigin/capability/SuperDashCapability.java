@@ -24,6 +24,10 @@ import java.util.List;
 import java.util.UUID;
 
 public class SuperDashCapability implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+	/*
+	 * This code from my project "EarthMobs"
+	 */
+
 	private static final UUID SPEED_MODIFIER_BOOST_UUID = UUID.fromString("27c5e239-7da4-eb8a-5f2b-03128556f2ab");
 	public float prevShadowX;
 	public float prevShadowY;
