@@ -3,7 +3,6 @@ package baguchan.pizzaguysorigin.powertype.configration;
 import com.mojang.serialization.Codec;
 import io.github.edwinmindcraft.apoli.api.IDynamicFeatureConfiguration;
 import io.github.edwinmindcraft.calio.api.network.CalioCodecHelper;
-import baguchan.pizzaguysorigin.powertype.configration.SuperDashConfiguration;
 
 public record SuperDashConfiguration(float strength) implements IDynamicFeatureConfiguration {
 	public static Codec<SuperDashConfiguration> CODEC;

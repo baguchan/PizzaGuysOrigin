@@ -11,7 +11,7 @@ import java.util.Optional;
 public class SuperDashPower extends PowerFactory<SuperDashConfiguration> {
 	public static Optional<Float> getSuperDashStrength(LivingEntity living) {
 		return !ModPowerTypes.SUPER_DASH.isPresent() ? Optional.empty() : IPowerContainer.getPowers(living, ModPowerTypes.SUPER_DASH.get()).stream().map((x) -> {
-			return ((SuperDashConfiguration)x.getConfiguration()).strength();
+			return x.getConfiguration().strength();
 		}).max(Float::compareTo);
 	}
 

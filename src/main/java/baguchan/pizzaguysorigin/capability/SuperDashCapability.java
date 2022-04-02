@@ -132,7 +132,7 @@ public class SuperDashCapability implements ICapabilityProvider, INBTSerializabl
 			}
 
 			float f = 0.15F * percentBoost;
-			attributeinstance.addTransientModifier(new AttributeModifier(SPEED_MODIFIER_BOOST_UUID, "Super Dash Boost", (double) f, AttributeModifier.Operation.ADDITION));
+			attributeinstance.addTransientModifier(new AttributeModifier(SPEED_MODIFIER_BOOST_UUID, "Super Dash Boost", f, AttributeModifier.Operation.ADDITION));
 		}
 	}
 
