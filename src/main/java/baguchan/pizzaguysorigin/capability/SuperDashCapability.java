@@ -1,0 +1,157 @@
+package baguchan.pizzaguysorigin.capability;
+
+import baguchan.pizzaguysorigin.PizzaGuysOrigin;
+import baguchan.pizzaguysorigin.init.ModPowerTypes;
+import io.github.edwinmindcraft.apoli.api.component.IPowerContainer;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.level.entity.EntityTypeTest;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.common.util.LazyOptional;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.UUID;
+
+public class SuperDashCapability implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+	private static final UUID SPEED_MODIFIER_BOOST_UUID = UUID.fromString("27c5e239-7da4-eb8a-5f2b-03128556f2ab");
+	public float prevShadowX;
+	public float prevShadowY;
+	public float prevShadowZ;
+
+	public float shadowX;
+	public float shadowY;
+	public float shadowZ;
+
+	public float prevShadowX2;
+	public float prevShadowY2;
+	public float prevShadowZ2;
+
+	public float shadowX2;
+	public float shadowY2;
+	public float shadowZ2;
+
+	public float prevYBodyRot;
+	public float yBodyRot;
+	public float prevYBodyRot2;
+	public float yBodyRot2;
+	public float prevRotationPitch;
+	public float xRot;
+	public float prevRotationPitch2;
+	public float xRot2;
+
+	private float percentBoost;
+
+	public void tick(LivingEntity livingEntity) {
+		double elasticity = 0.25D;
+		this.prevShadowX = this.shadowX;
+		this.prevShadowY = this.shadowY;
+		this.prevShadowZ = this.shadowZ;
+		this.prevShadowX2 = this.shadowX2;
+		this.prevShadowY2 = this.shadowY2;
+		this.prevShadowZ2 = this.shadowZ2;
+		this.prevYBodyRot = this.yBodyRot;
+		this.prevYBodyRot2 = this.yBodyRot2;
+		this.yBodyRot = (float) (this.yBodyRot + (livingEntity.yBodyRot - this.yBodyRot) * elasticity * 0.75D);
+		this.yBodyRot2 = (float) (this.yBodyRot2 + (this.yBodyRot - this.yBodyRot2) * elasticity * 0.3499999940395355D);
+		this.xRot = (float) (this.xRot + (livingEntity.getXRot() - this.xRot) * elasticity * 0.75D);
+		this.xRot2 = (float) (this.xRot2 + (this.xRot - this.xRot2) * elasticity * 0.3499999940395355D);
+		this.shadowX = (float) (this.shadowX + (livingEntity.getX() - this.shadowX) * elasticity);
+		this.shadowY = (float) (this.shadowY + (livingEntity.getY() - this.shadowY) * elasticity);
+		this.shadowZ = (float) (this.shadowZ + (livingEntity.getZ() - this.shadowZ) * elasticity);
+		this.shadowX2 = (float) (this.shadowX2 + (this.shadowX - this.shadowX2) * elasticity * 0.375D);
+		this.shadowY2 = (float) (this.shadowY2 + (this.shadowY - this.shadowY2) * elasticity * 0.375D);
+		this.shadowZ2 = (float) (this.shadowZ2 + (this.shadowZ - this.shadowZ2) * elasticity * 0.375D);
+
+		if (percentBoost >= 0.65F) {
+			pushEntities(livingEntity);
+		}
+
+		removeBoost(livingEntity);
+		if (IPowerContainer.hasPower(livingEntity, ModPowerTypes.SUPER_DASH.get())) {
+			tryAddBooster(livingEntity);
+		}
+	}
+
+	protected void pushEntities(LivingEntity entity) {
+		List<LivingEntity> list = entity.level.getEntities(EntityTypeTest.forClass(LivingEntity.class), entity.getBoundingBox().expandTowards(0.05F, 0.0F, 0.05F), EntitySelector.pushableBy(entity));
+		if (!list.isEmpty()) {
+			for (int l = 0; l < list.size(); ++l) {
+				LivingEntity entity2 = list.get(l);
+				if (entity != entity2) {
+					entity2.knockback(2.0D * percentBoost, entity2.getX() - entity.getX(), entity2.getZ() - entity.getZ());
+					entity2.hurt(DamageSource.mobAttack(entity), Mth.floor(8.0F * percentBoost));
+				}
+			}
+		}
+	}
+
+	protected void removeBoost(LivingEntity entity) {
+		AttributeInstance attributeinstance = entity.getAttribute(Attributes.MOVEMENT_SPEED);
+		if (attributeinstance != null) {
+			if (attributeinstance.getModifier(SPEED_MODIFIER_BOOST_UUID) != null) {
+				attributeinstance.removeModifier(SPEED_MODIFIER_BOOST_UUID);
+			}
+
+		}
+	}
+
+	protected void tryAddBooster(LivingEntity entity) {
+		if (entity.isSprinting()) {
+			if (percentBoost <= 1) {
+				percentBoost += 0.01F;
+			} else {
+				percentBoost = 1;
+			}
+
+		} else {
+			if (percentBoost >= 0) {
+				percentBoost -= 0.1F;
+			} else {
+				percentBoost = 0;
+			}
+		}
+		if (percentBoost > 0) {
+			AttributeInstance attributeinstance = entity.getAttribute(Attributes.MOVEMENT_SPEED);
+			if (attributeinstance == null) {
+				return;
+			}
+
+			float f = 0.15F * percentBoost;
+			attributeinstance.addTransientModifier(new AttributeModifier(SPEED_MODIFIER_BOOST_UUID, "Super Dash Boost", (double) f, AttributeModifier.Operation.ADDITION));
+		}
+	}
+
+	public CompoundTag serializeNBT() {
+		CompoundTag nbt = new CompoundTag();
+
+		nbt.putFloat("PercentBoost", percentBoost);
+
+
+		return nbt;
+	}
+
+	public void deserializeNBT(CompoundTag nbt) {
+		percentBoost = nbt.getFloat("PercentBoost");
+	}
+
+	public float getPercentBoost() {
+		return percentBoost;
+	}
+
+	@Override
+	@Nonnull
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
+		return capability == PizzaGuysOrigin.SUPER_DASH_CAP ? LazyOptional.of(() -> this).cast() : LazyOptional.empty();
+	}
+}
