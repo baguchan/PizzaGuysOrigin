@@ -36,10 +36,13 @@
       },
       {
         "type": "origins:name",
-        "name": "onFire.player"
+        "name": "lava.player"
+      },
+      {
+        "type": "origins:name",
+        "name": "inFire"
       }
     ]
   },
-  "hud_render": false,
   "cooldown": 2
 }
