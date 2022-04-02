@@ -1,12 +1,17 @@
 {
-  "type": "origins:multiple",
-  "add_velocity": {
-    "type": "origins:add_velocity",
-    "y": 4
-  },
-  "play_sound": {
-    "type": "origins:play_sound",
-    "sound": "minecraft:entity.generic.burn"
+  "type": "origins:simple",
+  "entity_action": {
+    "type": "origins:and",
+    "actions": [
+      {
+        "type": "origins:play_sound",
+        "sound": "minecraft:entity.generic.burn"
+      },
+      {
+        "type": "origins:add_velocity",
+        "y": 4
+      }
+    ]
   },
   "fluid_condition": {
     "type": "origins:in_tag",
