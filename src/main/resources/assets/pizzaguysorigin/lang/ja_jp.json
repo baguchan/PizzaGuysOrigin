@@ -1,0 +1,8 @@
+{
+  "origin.pizzaguysorigin.pizza_guys.name": "Pizza Guy",
+  "origin.pizzaguysorigin.pizza_guys.description": "pizza tower(game)のPeppinoというキャラクターのの能力です。 人間と同じですが、アニメチックな行動ができます",
+  "power.origins.anime_like_lava.name": "アニメチックな溶岩",
+  "power.origins.anime_like_lava.description": "もし溶岩に入ったら、あなたは熱さに飛び跳ねます。",
+  "power.origins.super_dash.name": "スーパーダッシュ",
+  "power.origins.super_dash.description": "もしあなたがダッシュしているとき、ほかのエンティティを突き飛ばすことができます。"
+}
